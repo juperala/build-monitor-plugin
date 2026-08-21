@@ -24,6 +24,9 @@ $cell-padding: 1rem;
   outline: none;
   overflow: hidden;
   text-align: center;
+  // Wrap long job names instead of clipping them, breaking mid-word only when
+  // a run has no break opportunity of its own (see utils/word-break.tsx)
+  overflow-wrap: break-word;
   color: var(
     --bm-contrast,
     color-mix(in srgb, var(--bm-cell-color) 75%, var(--text-color))
@@ -124,6 +127,9 @@ $cell-padding: 1rem;
 
   & > * {
     z-index: 10;
+    // Flex items are sized to fit their content, which for an unbreakable
+    // name is wider than the cell. Clamp them so the text wraps instead.
+    max-width: 100%;
   }
 
   &__details {

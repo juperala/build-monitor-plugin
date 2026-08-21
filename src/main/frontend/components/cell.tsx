@@ -1,6 +1,7 @@
 import { useUserPreferences } from "../context/user-preference-provider.tsx";
 import { Job } from "../models/job";
 import { buildStatusToClass } from "../utils/utils.ts";
+import { withWordBreaks } from "../utils/word-break.tsx";
 import Label from "./label";
 import Badges from "./snippets/badges.tsx";
 import BuildNumber from "./snippets/build-number.tsx";
@@ -29,7 +30,7 @@ function Cell({ job }: { job: Job }) {
 
       <h2>
         <Label
-          text={job.name}
+          text={withWordBreaks(job.name)}
           style={{
             fontSize: "1.25em",
             fontWeight: "550",

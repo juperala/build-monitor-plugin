@@ -62,6 +62,23 @@ public class JobComponent {
         return this;
     }
 
+    public JobComponent hasNameContainedWithinCell() {
+        Locator heading = component.locator("h2");
+
+        Number overflow = (Number) heading.evaluate("heading => {"
+                + "  const bounds = heading.closest('.bm-cell').getBoundingClientRect();"
+                + "  const name = heading.getBoundingClientRect();"
+                + "  return Math.max(bounds.left - name.left, name.right - bounds.right, 0);"
+                + "}");
+
+        if (overflow.doubleValue() > 0.5) {
+            throw new AssertionError(
+                    "Job name '" + heading.textContent() + "' overflows its cell by " + overflow + "px");
+        }
+
+        return this;
+    }
+
     public JobComponent hasStage(String stage) {
         assertThat(component).containsText(stage);
         return this;
